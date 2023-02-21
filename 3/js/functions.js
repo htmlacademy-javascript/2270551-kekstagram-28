@@ -1,19 +1,20 @@
 //функция сравнения длины моей строки myString с заданной длиной
 //возвращает true если выполняется условие
-const str_length = (myString, linghtNumber) => {
-  return myString.length >= linghtNumber;
+
+const checkLength = (myString, linghtNumber) => {
+  return myString.length <= linghtNumber;
 }
-str_length('проверяемая строка', 18);
+checkLength ('проверяемая строка', 18);
 
 
 /*Функция для проверки, является ли строка палиндромом.
 предусмотрите случай, когда в строке встречаются пробелы.
 */
 const checkPoly = (poly) => {
-  poly = poly.toString().toLowerCase().replace(/\s/g, "");
+  poly = poly.toString().toLowerCase().replace(/\s/g, '');
   /* приводим переменную poly к строковому виду маленькими буквами
   удаляем пробелы и знаки препинания */
-  return poly === poly.split("").reverse().join("");
+  return poly === poly.split('').reverse().join('');
 }
 checkPoly ('Аргентина манит негра');
 
