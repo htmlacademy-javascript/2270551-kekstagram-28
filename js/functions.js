@@ -1,7 +1,7 @@
 //функция сравнения длины моей строки myString с заданной длиной
 //возвращает true если выполняется условие
 
-const checkLength = (myString, linghtNumber) => (myString.length <= linghtNumber);
+const checkLength = (myString, linghtNumber) => myString.length <= linghtNumber;
 checkLength ('проверяемая строка', 18);
 
 
