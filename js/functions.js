@@ -1,9 +1,7 @@
 //функция сравнения длины моей строки myString с заданной длиной
 //возвращает true если выполняется условие
 
-const checkLength = (myString, linghtNumber) => {
-  return myString.length <= linghtNumber;
-}
+const checkLength = (myString, linghtNumber) => myString.length <= linghtNumber;
 checkLength ('проверяемая строка', 18);
 
 
@@ -15,7 +13,7 @@ const checkPoly = (poly) => {
   /* приводим переменную poly к строковому виду маленькими буквами
   удаляем пробелы и знаки препинания */
   return poly === poly.split('').reverse().join('');
-}
+};
 checkPoly ('Аргентина манит негра');
 
 /* возвращаем true если выполняется полное равенство условию
@@ -31,13 +29,13 @@ checkPoly ('Аргентина манит негра');
 
 const extractNamb = (string) => {
   let result = '';
-  for (let i=0; i<string.length; i++) {
+  for (let i = 0; i < string.length; i++) {
     if (!Number.isNaN(parseInt(string.at(i), 10))) {
       result += string.at(i);
     }
   }
   return parseInt (result, 10);
-}
+};
 extractNamb ('подпдпр 1.5');
 /* выполняем цикл и если результат не NaN склеиваем
   цифры в result. Выводим результат функции в десятичной
