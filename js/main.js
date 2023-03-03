@@ -1,4 +1,5 @@
 import './data.js';
+import './utils.js';
 import './const.js';
 import './forms.js';
 import './generator.js';
