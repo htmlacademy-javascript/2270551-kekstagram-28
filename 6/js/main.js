@@ -1,6 +1,7 @@
 import './data.js';
-import './const.js';
+import './utils.js';
+import './global-const.js';
 import './forms.js';
 import './generator.js';
-import './button actions.js';
+import './button-actions.js';
 import './effects.js';
