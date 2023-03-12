@@ -5,10 +5,10 @@ const container = document.querySelector('.pictures');
 const renderPhotos = (array) => {
   array.forEach (({url, description, comments, likes}) => {
     const picElem = pictureTemplate.cloneNode (true);
-    picElem.querySelector('.picture_img').src = url;
-    picElem.querySelector('.picture_img').alt = description;
-    picElem.querySelector('.picture_comments').textContent = comments.length;
-    picElem.querySelector('.picture_likes').textContent = likes;
+    picElem.querySelector('.picture__img').src = url;
+    picElem.querySelector('.picture__img').alt = description;
+    picElem.querySelector('.picture__comments').textContent = comments.length;
+    picElem.querySelector('.picture__likes').textContent = likes;
     fragment.appendChild(picElem);
   });
   return container.appendChild(fragment);
