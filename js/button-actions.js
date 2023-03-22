@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils.js';
-import {container, usersPublications} from './pictures.js';
+import {container, pictureData} from './pictures.js';
 import {renderPostContent, renderComments} from './big-picture.js';
 
 const bigPictureWindow = document.querySelector('.big-picture');
@@ -36,7 +36,7 @@ function closeBigPicture () {
 container.addEventListener('click', (evt) => {
   evt.preventDefault();
   const thumbnail = evt.target.closest('[data-thumbnail-id]');
-  const picture = usersPublications.find((item) => item.id === Number(thumbnail.dataset.thumbnailId));
+  const picture = pictureData.find((item) => item.id === Number(thumbnail.dataset.thumbnailId));
 
   if (evt.target.closest('.picture')) {
     openBigPicture(picture);
