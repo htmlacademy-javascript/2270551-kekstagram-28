@@ -1,6 +1,6 @@
 import {isEscapeKey} from './utils.js';
-import {usersImagesList, usersPublications} from './image-elements.js';
-import {renderPostContent, renderComments} from './picture-content.js';
+import {container, usersPublications} from './pictures.js';
+import {renderPostContent, renderComments} from './big-picture.js';
 
 const bigPictureWindow = document.querySelector('.big-picture');
 const commentsCount = bigPictureWindow.querySelector('.social__comment-count');
@@ -24,15 +24,16 @@ const openBigPicture = (id) => {
   renderComments(id);
 };
 
-const closeBigPicture = () => {
+
+function closeBigPicture () {
   bigPictureWindow.classList.add('hidden');
   commentsCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeyDown);
-};
+}
 
-usersImagesList.addEventListener('click', (evt) => {
+container.addEventListener('click', (evt) => {
   evt.preventDefault();
   const thumbnail = evt.target.closest('[data-thumbnail-id]');
   const picture = usersPublications.find((item) => item.id === Number(thumbnail.dataset.thumbnailId));
@@ -45,5 +46,6 @@ usersImagesList.addEventListener('click', (evt) => {
 bigPictureClose.addEventListener('click', () => {
   closeBigPicture();
 });
+
 
 export {openBigPicture};
