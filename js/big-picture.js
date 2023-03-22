@@ -14,7 +14,7 @@ const onDocumentKeyDown = (evt) => {
   }
 };
 
-function openBigPicture (id) {
+const openBigPicture = (id) => {
   bigPictureWindow.classList.remove('hidden');
   commentsCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
@@ -22,15 +22,15 @@ function openBigPicture (id) {
   document.addEventListener('keydown', onDocumentKeyDown);
   renderPostContent(id);
   renderComments(id);
-}
+};
 
-function closeBigPicture () {
+const closeBigPicture = () => {
   bigPictureWindow.classList.add('hidden');
   commentsCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeyDown);
-}
+};
 
 usersImagesList.addEventListener('click', (evt) => {
   evt.preventDefault();
