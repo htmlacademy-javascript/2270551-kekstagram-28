@@ -1,11 +1,12 @@
 
 import {container, renderPhotos} from './pictures.js';
-/* import {renderPostContent, renderComments} from './picture-content.js'; */
+import {renderPostContent, renderComments} from './big-picture.js';
 
 const bigPictureWindow = document.querySelector('.big-picture');
 const commentsCount = bigPictureWindow.querySelector('.social__comment-count');
 const commentsLoader = bigPictureWindow.querySelector('.comments-loader');
 const bigPictureClose = bigPictureWindow.querySelector('.big-picture__cancel');
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const onDocumentKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -46,6 +47,5 @@ bigPictureClose.addEventListener('click', () => {
   closeBigPicture();
 });
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
 
 export {openBigPicture};
