@@ -8,7 +8,7 @@ const createPhoto = ({url, description, comments, likes}) => {
   picElem.querySelector('.picture__img').alt = description;
   picElem.querySelector('.picture__comments').textContent = comments.length;
   picElem.querySelector('.picture__likes').textContent = likes;
-  picElem.dataset.picElemId = Id;
+  picElem.dataset.thumbnailId = id;
   /* picElem.addEventListener('click', (evt) => {
     evt.preventDefault();
     showBigPicture(url, description, comments, likes);
@@ -37,4 +37,4 @@ const removePictures = (pictures) => {
   }
 };
 
-export {renderPhotos, clearPhotos, removePictures};
+export {renderPhotos, clearPhotos, removePictures, container };
