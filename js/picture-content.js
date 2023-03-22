@@ -6,13 +6,13 @@ const bigPictureCommentsLength = renderContainer.querySelector('.comments-count'
 const bigPictureDescription = renderContainer.querySelector('.social__caption');
 const commentsField = renderContainer.querySelector('.social__comments');
 
-function renderPostContent (element) {
+const renderPostContent = (element) => {
   bigPictureSrc.src = element.url;
   bigPictureSrc.alt = element.description;
   bigPictureLikesCount.textContent = element.likes;
   bigPictureCommentsLength.textContent = element.comments.length;
   bigPictureDescription.textContent = element.description;
-}
+};
 
 const commentElementTamplate = document.querySelector('#comment')
   .content
@@ -20,7 +20,7 @@ const commentElementTamplate = document.querySelector('#comment')
 
 const usersCommentsFragment = document.createDocumentFragment();
 
-function renderComments (element) {
+const renderComments = (element) => {
   commentsField.innerHTML = '';
   const usersComments = element.comments;
 
@@ -34,6 +34,6 @@ function renderComments (element) {
   });
 
   commentsField.appendChild(usersCommentsFragment);
-}
+};
 
 export {renderPostContent, renderComments};

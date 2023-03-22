@@ -59,5 +59,6 @@ const getPictures = () =>
     createPicture(pictureIndex + 1)
   );
 const pictureData = getPictures();
+
 export {pictureData};
 

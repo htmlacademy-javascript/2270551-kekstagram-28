@@ -1,6 +1,6 @@
 
 import {container, renderPhotos} from './pictures.js';
-import {renderPostContent, renderComments} from './big-picture.js';
+import {renderPostContent, renderComments} from './picture-content.js';
 
 const bigPictureWindow = document.querySelector('.big-picture');
 const commentsCount = bigPictureWindow.querySelector('.social__comment-count');

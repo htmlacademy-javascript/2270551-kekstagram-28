@@ -1,7 +1,4 @@
-import './mock.js';
-import './utils.js';
-import './data.js';
-import './image-elements.js';
-import './big-picture.js';
+import {pictureData} from './data.js';
+import {renderPhotos} from './pictures.js';
 
 renderPhotos(pictureData);
