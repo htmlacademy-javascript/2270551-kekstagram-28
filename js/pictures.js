@@ -8,7 +8,8 @@ const createPhoto = ({url, description, comments, likes}) => {
   picElem.querySelector('.picture__img').alt = description;
   picElem.querySelector('.picture__comments').textContent = comments.length;
   picElem.querySelector('.picture__likes').textContent = likes;
-  /* picElem.dataset.picElemId = id; */
+
+
   /* picElem.addEventListener('click', (evt) => {
     evt.preventDefault();
     showBigPicture(url, description, comments, likes);

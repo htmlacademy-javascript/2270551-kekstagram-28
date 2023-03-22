@@ -1,11 +1,11 @@
-import {pictureData} from './data.js';
+import {createPostsArray} from './data.js';
 
 const usersImagesList = document.querySelector('.pictures');
 const imageElementTamplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const usersPublications = pictureData();
+const usersPublications = createPostsArray();
 
 const usersPublicationsFragment = document.createDocumentFragment();
 
