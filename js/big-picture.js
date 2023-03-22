@@ -1,12 +1,11 @@
-
-import {container, renderPhotos} from './pictures.js';
+import {isEscapeKey} from './utils.js';
+import {usersImagesList, usersPublications} from './image-elements.js';
 import {renderPostContent, renderComments} from './picture-content.js';
 
 const bigPictureWindow = document.querySelector('.big-picture');
 const commentsCount = bigPictureWindow.querySelector('.social__comment-count');
 const commentsLoader = bigPictureWindow.querySelector('.comments-loader');
 const bigPictureClose = bigPictureWindow.querySelector('.big-picture__cancel');
-const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const onDocumentKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -15,7 +14,7 @@ const onDocumentKeyDown = (evt) => {
   }
 };
 
-const openBigPicture = (id) => {
+function openBigPicture (id) {
   bigPictureWindow.classList.remove('hidden');
   commentsCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
@@ -23,20 +22,20 @@ const openBigPicture = (id) => {
   document.addEventListener('keydown', onDocumentKeyDown);
   renderPostContent(id);
   renderComments(id);
-};
+}
 
-const closeBigPicture = () => {
+function closeBigPicture () {
   bigPictureWindow.classList.add('hidden');
   commentsCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeyDown);
-};
+}
 
-container.addEventListener('click', (evt) => {
+usersImagesList.addEventListener('click', (evt) => {
   evt.preventDefault();
   const thumbnail = evt.target.closest('[data-thumbnail-id]');
-  const picture = renderPhotos.find((item) => item.id === Number(thumbnail.dataset.thumbnailId));
+  const picture = usersPublications.find((item) => item.id === Number(thumbnail.dataset.thumbnailId));
 
   if (evt.target.closest('.picture')) {
     openBigPicture(picture);
@@ -46,6 +45,5 @@ container.addEventListener('click', (evt) => {
 bigPictureClose.addEventListener('click', () => {
   closeBigPicture();
 });
-
 
 export {openBigPicture};
