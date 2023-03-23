@@ -3,7 +3,7 @@ import {renderBigPictureData} from './big-picture.js';
 import {isEscKey, isEnterKey} from './utils.js';
 
 const COMMENTS_COUNT = 5;
-
+/* количество коментов на страничке */
 const pictureContainer = document.querySelector('.pictures');
 const photoModalElement = document.querySelector('.big-picture');
 const photoModalCloseElement = photoModalElement.querySelector('.big-picture__cancel');
@@ -23,7 +23,7 @@ const onDocumentKeydown = (evt) => {
 
 const createComment = ({avatar, message, name}) => {
   const comment = document.createElement('li');
-  comment.innerHTML = '<img class="social__picture" src="" alt="" width="35" height="35"><p class="social__text"></p>';
+  comment.append = '<img class="social__picture" src="" alt="" width="35" height="35"><p class="social__text"></p>';
   comment.classList.add('social__comment');
   comment.querySelector('.social__picture').src = avatar;
   comment.querySelector('.social__picture').alt = name;
@@ -44,9 +44,9 @@ const renderComments = () => {
     const commentElement = createComment(comments[i]);
     fragment.append(commentElement);
   }
-  commentList.innerHTML = '';
+  commentList.append = '';
   commentList.append(fragment);
-  commentCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
+  commentCount.append = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
 };
 
 const openModal = (picture) => {
