@@ -10,11 +10,14 @@ const cancelButton = document.querySelector('.img-upload__cancel');
 const hashtagInput = document.querySelector('.text__hashtags');
 const descriptionInput = document.querySelector('.text__description');
 
-const pristine = new Pristine(imgUploadForm, {
+const pristine = new Pristine(imgUploadForm);
+
+new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__error-text',
 });
+
 
 const openModal = () => {
   overlay.classList.remove('hidden');
