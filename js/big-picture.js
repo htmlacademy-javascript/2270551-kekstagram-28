@@ -6,5 +6,5 @@ const renderBigPictureData = ({url, description, likes}) => {
   bigPicture.querySelector('.social__caption').textContent = description;
   bigPicture.querySelector('.likes-count').textContent = likes;
 };
-
+/* находим класс big-picture и присваиваем адрес описание лайки и альтернативный текст */
 export {renderBigPictureData};

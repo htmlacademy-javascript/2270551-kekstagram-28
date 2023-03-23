@@ -1,6 +1,6 @@
 import {createPictures} from './pictures.js';
 import {renderBigPictureData} from './big-picture.js';
-import {isEscapeKey, isEnterKey} from './utils.js';
+import {isEscKey, isEnterKey} from './utils.js';
 
 const COMMENTS_COUNT = 5;
 
@@ -15,7 +15,7 @@ let commentsShown = 0;
 let comments = [];
 
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscKey(evt)) {
     evt.preventDefault();
     closeModal();
   }
