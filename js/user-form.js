@@ -1,4 +1,4 @@
-import {isEscapeKey} from './utils.js';
+import {isEscKey} from './utils.js';
 
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAG_COUNT = 5;
@@ -10,12 +10,6 @@ const cancelButton = document.querySelector('.img-upload__cancel');
 const hashtagInput = document.querySelector('.text__hashtags');
 const descriptionInput = document.querySelector('.text__description');
 
-/* const pristine = new Pristine(imgUploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__error-text',
-}); */
-
 const openModal = () => {
   overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -24,7 +18,6 @@ const openModal = () => {
 
 const closeModal = () => {
   imgUploadForm.reset();
-  /*pristine.reset(); */
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -37,7 +30,7 @@ cancelButton.addEventListener('click', () => {
 const isInputsFocused = () => document.activeElement === hashtagInput || document.activeElement === descriptionInput;
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt) && !isInputsFocused()) {
+  if (isEscKey(evt) && !isInputsFocused()) {
     evt.preventDefault();
     closeModal();
   }
@@ -67,19 +60,6 @@ errors.set(validateFirstSymbol, 'Хэш-тег должен начинаться
   .set(validateSymbols, 'Хэш-теги должны состоять из букв и чисел')
   .set(validateCount, 'Нельзя указать больше пяти хэш-тегов')
   .set(validateUniqueness, 'Хэш-теги не должны повторяться');
-
-errors.forEach((value, key) =>
-  pristine.addValidator(
-    hashtagInput,
-    key,
-    value
-  )
-);
-
-imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
 
 const loadPhoto = () => {
   photoUploadButton.addEventListener('change', () => {
