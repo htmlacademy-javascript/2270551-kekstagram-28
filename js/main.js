@@ -1,7 +1,6 @@
-import {pictureData} from './data.js';
-import {renderPhotos} from './pictures.js';
-import './picture-content.js';
-import './button-actions.js';
-/* import './utils.js'; */
+import {loadPhoto} from './user-form.js';
+import {createGallery} from './gallery.js';
+import {createPhotos} from './data.js';
 
-renderPhotos(pictureData);
+createGallery(createPhotos());
+loadPhoto();

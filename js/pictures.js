@@ -1,42 +1,22 @@
+const pictureContainer = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture')
+  .content
+  .querySelector('.picture');
 
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const container = document.querySelector('.pictures');
+const createPictures = (pictures) => {
+  const pictureContainerFragment = document.createDocumentFragment();
 
-
-const createPhoto = ({url, description, comments, likes, id}) => {
-  const picElem = pictureTemplate.cloneNode (true);
-  picElem.querySelector('.picture__img').src = url;
-  picElem.querySelector('.picture__img').alt = description;
-  picElem.querySelector('.picture__comments').textContent = comments.length;
-  picElem.querySelector('.picture__likes').textContent = likes;
-  picElem.dataset.thumbnailId = id;
-
-  /* picElem.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    showBigPicture(url, description, comments, likes);
-  }); */
-
-  return picElem;
-};
-
-const renderPhotos = (pictures) => {
-  const fragment = document.createDocumentFragment();
-  pictures.forEach((picture) => {
-    const picElem = createPhoto (picture);
-    fragment.append(picElem);
+  pictures.forEach(({url, description, comments, likes, id}) => {
+    const pictureElement = pictureTemplate.cloneNode(true);
+    pictureElement.querySelector('.picture__img').src = url;
+    pictureElement.querySelector('.picture__img').alt = description;
+    pictureElement.querySelector('.picture__comments').textContent = comments.length;
+    pictureElement.querySelector('.picture__likes').textContent = likes;
+    pictureElement.dataset.pictureElementId = id;
+    pictureContainer.append(pictureElement);
   });
-  container.append(fragment);
+
+  pictureContainer.append(pictureContainerFragment);
 };
 
-const clearPhotos = (pictures) => {
-  pictures.appendChild = '';
-};
-
-const removePictures = (pictures) => {
-  const photos = pictures.querySelectorAll('.picture');
-  if (photos) {
-    photos.forEach((photo) => photo.remove());
-  }
-};
-
-export {renderPhotos, clearPhotos, removePictures, container };
+export {createPictures};
