@@ -23,13 +23,16 @@ const onDocumentKeydown = (evt) => {
 
 const createComment = ({avatar, message, name}) => {
   const comment = document.createElement('li');
-  comment.append = '<img class="social__picture" src="" alt="" width="35" height="35"><p class="social__text"></p>';
+  comment.innerHTML = '<img class="social__picture" src="" alt="" width="35" height="35"><p class="social__text"></p>';
   comment.classList.add('social__comment');
   comment.querySelector('.social__picture').src = avatar;
   comment.querySelector('.social__picture').alt = name;
   comment.querySelector('.social__text').textContent = message;
   return comment;
 };
+
+const total = 10;
+const totalWord = 'коментари';
 
 const renderComments = () => {
   commentsShown += COMMENTS_COUNT;
@@ -39,15 +42,22 @@ const renderComments = () => {
   } else {
     commentsLoader.classList.remove('hidden');
   }
+  /* const commentsDeclination =
+  totalWord +
+  (total.toString().slice(-1) === '1' && total.toString().slice(-2) !== '11'
+    ? 'я'
+    : 'ев'); */
+
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < commentsShown; i++) {
     const commentElement = createComment(comments[i]);
     fragment.append(commentElement);
   }
-  commentList.append = '';
+  commentList.innerHTML = '';
   commentList.append(fragment);
-  commentCount.append = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
+  /* commentCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> ${commentsDeclination}`; */
 };
+
 
 const openModal = (picture) => {
   photoModalElement.classList.remove('hidden');
