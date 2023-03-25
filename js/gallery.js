@@ -14,6 +14,8 @@ const commentList = document.querySelector('.social__comments');
 let commentsShown = 0;
 let comments = [];
 
+
+/* убираем большую картинку по кнопке esc */
 const onDocumentKeydown = (evt) => {
   if (isEscKey(evt)) {
     evt.preventDefault();
@@ -31,10 +33,8 @@ const createComment = ({avatar, message, name}) => {
   return comment;
 };
 
-const total = 10;
-const totalWord = 'коментари';
-
 const renderComments = () => {
+
   commentsShown += COMMENTS_COUNT;
   if (commentsShown >= comments.length) {
     commentsLoader.classList.add('hidden');
@@ -42,26 +42,36 @@ const renderComments = () => {
   } else {
     commentsLoader.classList.remove('hidden');
   }
-  /* const commentsDeclination =
-  totalWord +
-  (total.toString().slice(-1) === '1' && total.toString().slice(-2) !== '11'
-    ? 'я'
-    : 'ев'); */
-
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < commentsShown; i++) {
     const commentElement = createComment(comments[i]);
     fragment.append(commentElement);
   }
+  /* функция проверки склонения слова после числа */
+  function commentsDeclination(n, textForms) {
+    n = Math.abs(n) % 100;
+    const n1 = n % 10;
+    if (n1 > 1) {
+      return textForms[1];
+    }
+    if (n1 === 1 && n1 !== 11) {
+      return textForms[0];
+    }
+    return textForms[1];
+  }
+
   commentList.innerHTML = '';
   commentList.append(fragment);
-  /* commentCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> ${commentsDeclination}`; */
+  commentCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> ${commentsDeclination(comments.length, ['коментария', 'коментариев'])}`;
 };
 
 
 const openModal = (picture) => {
   photoModalElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  commentsLoader.classList.add('hidden');
+  commentCount.classList.add('hidden');
+  /* выключаем счетчик коментариев */
   document.addEventListener('keydown', onDocumentKeydown);
   renderBigPictureData(picture);
   comments = picture.comments;
