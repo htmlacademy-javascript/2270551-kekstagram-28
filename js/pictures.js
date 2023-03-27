@@ -19,4 +19,4 @@ const createPictures = (pictures) => {
   pictureContainer.append(pictureContainerFragment);
 };
 
-export {createPictures};
+export {createPictures, pictureContainer};

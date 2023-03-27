@@ -45,4 +45,3 @@ const getPhoto = () => ({
 const createPhotos = () => Array.from({length: PICTURE_COUNT}, getPhoto);
 
 export {createPhotos};
-

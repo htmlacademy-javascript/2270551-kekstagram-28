@@ -1,21 +1,14 @@
-import {createPictures} from './pictures.js';
-import {renderBigPictureData} from './big-picture.js';
+/* 1 модуль отрисовки окна с полноразмерным изображением */
+import {createPictures, pictureContainer} from './pictures.js';
+import {renderBigPictureData, bigPicture} from './big-picture.js';
 import {isEscKey, isEnterKey} from './utils.js';
 
-const COMMENTS_COUNT = 5;
-/* количество коментов на страничке */
-const pictureContainer = document.querySelector('.pictures');
-const photoModalElement = document.querySelector('.big-picture');
-const photoModalCloseElement = photoModalElement.querySelector('.big-picture__cancel');
+
+const bigPictureCloseElement = bigPicture.querySelector('.big-picture__cancel');
 const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
-const commentList = document.querySelector('.social__comments');
 
-let commentsShown = 0;
-let comments = [];
-
-
-/* убираем большую картинку по кнопке esc */
+/* 5 убираем большую картинку по кнопке esc */
 const onDocumentKeydown = (evt) => {
   if (isEscKey(evt)) {
     evt.preventDefault();
@@ -23,6 +16,7 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+/* 2 разметка комментариев под большой фотографией */
 const createComment = ({avatar, message, name}) => {
   const comment = document.createElement('li');
   comment.innerHTML = '<img class="social__picture" src="" alt="" width="35" height="35"><p class="social__text"></p>';
@@ -33,45 +27,17 @@ const createComment = ({avatar, message, name}) => {
   return comment;
 };
 
-const renderComments = () => {
-
-  commentsShown += COMMENTS_COUNT;
-  if (commentsShown >= comments.length) {
-    commentsLoader.classList.add('hidden');
-    commentsShown = comments.length;
-  } else {
-    commentsLoader.classList.remove('hidden');
-  }
-  const fragment = document.createDocumentFragment();
-  for (let i = 0; i < commentsShown; i++) {
-    const commentElement = createComment(comments[i]);
-    fragment.append(commentElement);
-  }
-  /* функция проверки склонения слова после числа */
-  function commentsDeclination(n, textForms) {
-    n = Math.abs(n) % 100;
-    const n1 = n % 10;
-    if (n1 > 1) {
-      return textForms[1];
-    }
-    if (n1 === 1 && n1 !== 11) {
-      return textForms[0];
-    }
-    return textForms[1];
-  }
-
-  commentList.innerHTML = '';
-  commentList.append(fragment);
-  commentCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> ${commentsDeclination(comments.length, ['коментария', 'коментариев'])}`;
-};
-
-
+/* открытие большого окна по нажатию на миниатюру */
 const openModal = (picture) => {
-  photoModalElement.classList.remove('hidden');
+  /* убираем hidden показываем большую картинку */
+  bigPicture.classList.remove('hidden');
+  /* 4 добавляем тегу body класс modal-open чтобы убрать прокрутку */
   document.body.classList.add('modal-open');
+  /* 3 прячем загрузки новых комментариев */
   commentsLoader.classList.add('hidden');
+  /* 3 выключаем счетчик коментариев */
   commentCount.classList.add('hidden');
-  /* выключаем счетчик коментариев */
+  /* соответствие миниатюры и большой фото */
   document.addEventListener('keydown', onDocumentKeydown);
   renderBigPictureData(picture);
   comments = picture.comments;
@@ -81,17 +47,18 @@ const openModal = (picture) => {
   }
 };
 
+/* функция закрытия большого окна */
 function closeModal () {
-  photoModalElement.classList.add('hidden');
+  bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 }
-
-photoModalCloseElement.addEventListener('click', () => {
+/* отслеживание события "клик" для закрытия окна */
+bigPictureCloseElement.addEventListener('click', () => {
   closeModal();
 });
 
-photoModalCloseElement.addEventListener('keydown', (evt) => {
+bigPictureCloseElement.addEventListener('keydown', (evt) => {
   if (isEnterKey(evt)) {
     closeModal();
   }
