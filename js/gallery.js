@@ -78,10 +78,6 @@ const openModal = (picture) => {
   bigPicture.classList.remove('hidden');
   /* 4 добавляем тегу body класс modal-open чтобы убрать прокрутку */
   document.body.classList.add('modal-open');
-  /* 3 прячем загрузки новых комментариев */
-  commentsLoader.classList.add('hidden');
-  /* 3 выключаем счетчик коментариев */
-  commentCount.classList.add('hidden');
   /* соответствие миниатюры и большой фото */
   document.addEventListener('keydown', onDocumentKeydown);
   renderBigPictureData(picture);
