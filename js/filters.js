@@ -1,3 +1,4 @@
+/* для задачи часть2
 const FILTERS = [
   {
     name: 'none',
@@ -55,7 +56,8 @@ const photoPreview = document.querySelector('.img-upload__preview img');
 const effectLevel = document.querySelector('.effect-level__value');
 const effectItem = document.querySelector('.effects');
 
-let currentFilter = FILTERS[0];
+const DEFAULT_FILTERS = FILTERS[0];
+let currentFilter = DEFAULT_FILTERS;
 
 const isDefault = () => currentFilter === FILTERS[0];
 
@@ -67,7 +69,7 @@ const hideSlider = () => {
   sliderContainer.classList.add('hidden');
 };
 
-noUiSlider.create(sliderElement, {
+window.noUiSlider.create(sliderElement, {
   range: {
     min: 0,
     max: 100,
@@ -119,4 +121,4 @@ const onSliderUpdate = () => {
 
 sliderElement.noUiSlider.on('update', onSliderUpdate);
 
-export {resetEffects};
+export {resetEffects}; */
