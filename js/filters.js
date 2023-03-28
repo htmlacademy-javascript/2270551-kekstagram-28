@@ -1,4 +1,4 @@
-/* для задачи часть2
+/* задача 9 часть 2 эффекты фильтров */
 const FILTERS = [
   {
     name: 'none',
@@ -56,8 +56,8 @@ const photoPreview = document.querySelector('.img-upload__preview img');
 const effectLevel = document.querySelector('.effect-level__value');
 const effectItem = document.querySelector('.effects');
 
-const DEFAULT_FILTERS = FILTERS[0];
-let currentFilter = DEFAULT_FILTERS;
+let currentFilter = FILTERS[0];
+
 
 const isDefault = () => currentFilter === FILTERS[0];
 
@@ -121,4 +121,5 @@ const onSliderUpdate = () => {
 
 sliderElement.noUiSlider.on('update', onSliderUpdate);
 
-export {resetEffects}; */
+export {resetEffects};
+
