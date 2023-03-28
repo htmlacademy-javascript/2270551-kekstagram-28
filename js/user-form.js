@@ -16,7 +16,8 @@ const inputValue = document.querySelector('.scale__control--value');
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__error-text',
+  /* errorTextClass: 'img-upload__error-text', */
+  errorTextClass: 'img-upload__field-wrapper__error',
 });
 
 const openModal = () => {
@@ -40,10 +41,20 @@ cancelButton.addEventListener('click', () => {
   closeModal();
 });
 
-const isInputsFocused = () => document.activeElement === hashtagInput || document.activeElement === descriptionInput;
+/* const isInputsFocused = () =>
+document.activeElement === hashtagInput ||
+document.activeElement === descriptionInput; */
+
+descriptionInput.addEventListener('focus', () => {
+  document.removeEventListener('keydown', onDocumentKeydown);
+});
+descriptionInput.addEventListener('blur', () => {
+  document.addEventListener('keydown', onDocumentKeydown);
+});
+
 
 function onDocumentKeydown(evt) {
-  if (isEscKey(evt) && !isInputsFocused()) {
+  if (isEscKey(evt)) {
     evt.preventDefault();
     closeModal();
   }
@@ -68,11 +79,11 @@ const validateUniqueness = (tags) => {
 };
 
 const errors = new Map();
-errors.set(validateFirstSymbol, 'Хэш-тег должен начинаться с символа # (решётка)')
-  .set(validateLength, 'Максимальная длина хэш-тега 20 символов')
-  .set(validateSymbols, 'Хэш-теги должны состоять из букв и чисел')
-  .set(validateCount, 'Нельзя указать больше пяти хэш-тегов')
-  .set(validateUniqueness, 'Хэш-теги не должны повторяться');
+errors.set(validateFirstSymbol, 'Хэш-тег должен начинаться с символа # (решётка) !')
+  .set(validateLength, 'Максимальная длина хэш-тега 20 символов !')
+  .set(validateSymbols, 'Хэш-теги должны состоять из букв и чисел !')
+  .set(validateCount, 'Нельзя указать больше пяти хэш-тегов !')
+  .set(validateUniqueness, 'Хэш-теги не должны повторяться !');
 
 errors.forEach((value, key) =>
   pristine.addValidator(
@@ -82,6 +93,7 @@ errors.forEach((value, key) =>
   )
 );
 
+/* проверка формы перед отправкой */
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
