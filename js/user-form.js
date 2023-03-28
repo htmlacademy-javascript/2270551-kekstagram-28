@@ -1,6 +1,7 @@
+/* модуль работы с формой */
 import {isEscKey} from './utils.js';
 import {resetScale} from './scale-user-form.js';
-import {resetEffects} from './filters.js';
+/* import {resetEffects} from './filters.js'; для следующей задачи*/
 
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAG_COUNT = 5;
@@ -16,7 +17,6 @@ const inputValue = document.querySelector('.scale__control--value');
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-  /* errorTextClass: 'img-upload__error-text', */
   errorTextClass: 'img-upload__field-wrapper__error',
 });
 
@@ -30,7 +30,7 @@ const openModal = () => {
 const closeModal = () => {
   imgUploadForm.reset();
   resetScale();
-  resetEffects();
+  /* resetEffects(); следующая задача */
   pristine.reset();
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -41,20 +41,19 @@ cancelButton.addEventListener('click', () => {
   closeModal();
 });
 
-/* const isInputsFocused = () =>
-document.activeElement === hashtagInput ||
-document.activeElement === descriptionInput; */
+const isInputsFocused = () => document.activeElement === hashtagInput ||
+document.activeElement === descriptionInput;
 
-descriptionInput.addEventListener('focus', () => {
+/* descriptionInput.addEventListener('focus', () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 });
 descriptionInput.addEventListener('blur', () => {
   document.addEventListener('keydown', onDocumentKeydown);
-});
+}); */
 
 
 function onDocumentKeydown(evt) {
-  if (isEscKey(evt)) {
+  if (isEscKey(evt) && !isInputsFocused()) {
     evt.preventDefault();
     closeModal();
   }

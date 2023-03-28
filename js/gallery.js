@@ -12,7 +12,6 @@ const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const commentList = document.querySelector('.social__comments');
 
-
 let commentsShown = 0;
 let comments = [];
 
