@@ -70,13 +70,19 @@ const getTags = (value) => {
   return tags;
 };
 
+/*function validateHashtagSpaces (value) {
+  const hashArray = value.split(' ');
+  return !hashArray.every((hashtag) => hashtag.includes('#', 1));
+}*/
+
 const validateLength = (value) => getTags(value).every((item) => item.length <= MAX_HASHTAG_LENGTH);
 
 const validateCount = (value) => getTags(value).length <= MAX_HASHTAG_COUNT;
 
 const validateFirstSymbol = (value) => getTags(value).every((item) => /^#/.test(item));
 
-const validateSymbols = (value) => getTags(value).every((item) => /^.[\wА-яЁё]+$/.test(item));
+
+const validateSymbols = (value) => getTags(value).every((item) => /^#[a-zа-яё0-9]{1,19}$/i.test(item));
 
 const validateUniqueness = (tags) => {
   const lowerCaseTags = getTags(tags).map((tag) => tag.toLowerCase());
