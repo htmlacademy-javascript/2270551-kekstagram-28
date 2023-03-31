@@ -1408,3 +1408,13 @@
   .hidden {
     display: none;
 }
+
+  .img-upload__field-wrapper__error {
+  background-color: yellow;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: -20px;
+  z-index: 1000;
+  position: relative;
+  }
