@@ -1,7 +1,7 @@
 /* модуль работы с формой */
 import {isEscKey} from './utils.js';
 import {resetScale} from './scale-user-form.js';
-/* import {resetEffects} from './filters.js'; для следующей задачи*/
+import {resetEffects} from './filters.js';
 
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAG_COUNT = 5;
@@ -30,7 +30,7 @@ const openModal = () => {
 const closeModal = () => {
   imgUploadForm.reset();
   resetScale();
-  /* resetEffects(); следующая задача */
+  resetEffects();
   pristine.reset();
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -44,13 +44,19 @@ cancelButton.addEventListener('click', () => {
 const isInputsFocused = () => document.activeElement === hashtagInput ||
 document.activeElement === descriptionInput;
 
-/* descriptionInput.addEventListener('focus', () => {
+/* рабочий вариант для закрытия формы при не наведении курсора
+descriptionInput.addEventListener('focus', () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 });
 descriptionInput.addEventListener('blur', () => {
   document.addEventListener('keydown', onDocumentKeydown);
+});
+hashtagInput.addEventListener('focus', () => {
+  document.removeEventListener('keydown', onDocumentKeydown);
+});
+hashtagInput.addEventListener('blur', () => {
+  document.addEventListener('keydown', onDocumentKeydown);
 }); */
-
 
 function onDocumentKeydown(evt) {
   if (isEscKey(evt) && !isInputsFocused()) {
@@ -64,13 +70,19 @@ const getTags = (value) => {
   return tags;
 };
 
+/*function validateHashtagSpaces (value) {
+  const hashArray = value.split(' ');
+  return !hashArray.every((hashtag) => hashtag.includes('#', 1));
+}*/
+
 const validateLength = (value) => getTags(value).every((item) => item.length <= MAX_HASHTAG_LENGTH);
 
 const validateCount = (value) => getTags(value).length <= MAX_HASHTAG_COUNT;
 
 const validateFirstSymbol = (value) => getTags(value).every((item) => /^#/.test(item));
 
-const validateSymbols = (value) => getTags(value).every((item) => /^.[\wА-яЁё]+$/.test(item));
+
+const validateSymbols = (value) => getTags(value).every((item) => /^#[a-zа-яё0-9]{1,19}$/i.test(item));
 
 const validateUniqueness = (tags) => {
   const lowerCaseTags = getTags(tags).map((tag) => tag.toLowerCase());

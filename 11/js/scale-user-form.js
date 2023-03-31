@@ -8,6 +8,7 @@ const minusButton = document.querySelector('.scale__control--smaller');
 const plusButton = document.querySelector('.scale__control--bigger');
 const inputValue = document.querySelector('.scale__control--value');
 const photoPreview = document.querySelector('.img-upload__preview img');
+/*const knopki = document.querySelector('.img-upload__scale');*/
 
 let currentValue = 0;
 
@@ -17,7 +18,41 @@ const scalePhoto = (value) => {
   inputValue.value = `${value}%`;
 };
 
-/* клик по кнопке минус-масштаб */
+const changeZoom = (factor = 1) => {
+  currentValue = parseInt(inputValue.value, 10);
+  let newValue = currentValue + (STEP_VALUE * factor);
+  if (newValue < MIN_SCALE) {
+    newValue = MIN_SCALE;
+  }
+  if (newValue > MAX_SCALE) {
+    newValue = MAX_SCALE;
+  }
+  scalePhoto(newValue);
+};
+plusButton.addEventListener('click', () => {
+  changeZoom(1);
+});
+minusButton.addEventListener('click', () => {
+  changeZoom(-1);
+});
+
+/*knopki.addEventListener('click', () => {
+  currentValue = parseInt(inputValue.value, 10);
+  let newValue = currentValue + (STEP_VALUE * factor);
+  if (knopki.matches('.scale__control--smaller')) {
+    newValue = currentValue - STEP_VALUE;
+    if (newValue < MIN_SCALE) {
+      newValue = MIN_SCALE;
+    }
+  } if (knopki.matches('.scale__control--bigger')) {
+    newValue = currentValue + STEP_VALUE;
+    if (newValue > MAX_SCALE) {
+      newValue = MAX_SCALE;
+    }
+  } scalePhoto(newValue);
+}); */
+
+/* клик по кнопке минус-масштаб
 minusButton.addEventListener('click', () => {
   currentValue = parseInt(inputValue.value, 10);
   let newValue = currentValue - STEP_VALUE;
@@ -27,7 +62,7 @@ minusButton.addEventListener('click', () => {
   scalePhoto(newValue);
 });
 
-/* клик по кнопке плюс-масштаб */
+/* клик по кнопке плюс-масштаб
 plusButton.addEventListener('click', () => {
   currentValue = parseInt(inputValue.value, 10);
   let newValue = currentValue + STEP_VALUE;
@@ -35,7 +70,7 @@ plusButton.addEventListener('click', () => {
     newValue = MAX_SCALE;
   }
   scalePhoto(newValue);
-});
+}); */
 
 /* сброс масштаба по умолчанию */
 const resetScale = () => scalePhoto(DEFAULT_SCALE);
