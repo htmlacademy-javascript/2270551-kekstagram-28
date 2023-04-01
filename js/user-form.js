@@ -41,6 +41,7 @@ cancelButton.addEventListener('click', () => {
   closeModal();
 });
 
+/* обработчик запрета закрытия формы если есть фокус на хэтэг или текстовое поле */
 const isInputsFocused = () => document.activeElement === hashtagInput ||
 document.activeElement === descriptionInput;
 
@@ -104,7 +105,7 @@ errors.forEach((value, key) =>
   )
 );
 
-/* проверка формы перед отправкой */
+/* запрет отправки формы */
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
