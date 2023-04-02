@@ -2,9 +2,16 @@
 import {isEscKey} from './utils.js';
 import {resetScale} from './scale-user-form.js';
 import {resetEffects} from './filters.js';
+import {showErrorMessage} from './message.js';
 
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAG_COUNT = 5;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const overlay = document.querySelector('.img-upload__overlay');
@@ -13,6 +20,10 @@ const cancelButton = document.querySelector('.img-upload__cancel');
 const hashtagInput = document.querySelector('.text__hashtags');
 const descriptionInput = document.querySelector('.text__description');
 const inputValue = document.querySelector('.scale__control--value');
+const submitButton = imgUploadForm.querySelector('.img-upload__submit');
+const fileChooser = document.querySelector('.img-upload__input');
+const preview = document.querySelector('.img-upload__preview img');
+const miniPreviews = document.querySelectorAll('.effects__preview');
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -45,19 +56,6 @@ cancelButton.addEventListener('click', () => {
 const isInputsFocused = () => document.activeElement === hashtagInput ||
 document.activeElement === descriptionInput;
 
-/* рабочий вариант для закрытия формы при не наведении курсора
-descriptionInput.addEventListener('focus', () => {
-  document.removeEventListener('keydown', onDocumentKeydown);
-});
-descriptionInput.addEventListener('blur', () => {
-  document.addEventListener('keydown', onDocumentKeydown);
-});
-hashtagInput.addEventListener('focus', () => {
-  document.removeEventListener('keydown', onDocumentKeydown);
-});
-hashtagInput.addEventListener('blur', () => {
-  document.addEventListener('keydown', onDocumentKeydown);
-}); */
 
 function onDocumentKeydown(evt) {
   if (isEscKey(evt) && !isInputsFocused()) {
@@ -71,10 +69,6 @@ const getTags = (value) => {
   return tags;
 };
 
-/*function validateHashtagSpaces (value) {
-  const hashArray = value.split(' ');
-  return !hashArray.every((hashtag) => hashtag.includes('#', 1));
-}*/
 
 const validateLength = (value) => getTags(value).every((item) => item.length <= MAX_HASHTAG_LENGTH);
 
@@ -105,16 +99,45 @@ errors.forEach((value, key) =>
   )
 );
 
-/* запрет отправки формы */
-imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
 
-const loadPhoto = () => {
-  photoUploadButton.addEventListener('change', () => {
-    openModal();
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const onFormSubmit = (cb) => {
+  imgUploadForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      await cb(new FormData(imgUploadForm));
+      unblockSubmitButton();
+    }
   });
 };
 
-export {loadPhoto};
+const onUploadFormChange = () => {
+  photoUploadButton.addEventListener('change', () => {
+    const file = fileChooser.files[0];
+    const fileName = file.name.toLowerCase();
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+    if (matches) {
+      preview.src = URL.createObjectURL(file);
+      for (const miniPreview of miniPreviews) {
+        miniPreview.style.backgroundImage = `url(${preview.src})`;
+      }
+      openModal();
+    } else {
+      showErrorMessage();
+    }
+  });
+};
+
+
+export {onFormSubmit, onUploadFormChange, closeModal};

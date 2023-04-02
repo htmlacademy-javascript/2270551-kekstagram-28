@@ -69,7 +69,7 @@ const hideSlider = () => {
   sliderContainer.classList.add('hidden');
 };
 
-window.noUiSlider.create(sliderElement, {
+noUiSlider.create(sliderElement, {
   range: {
     min: DEFAULT_FILTERS.min,
     max: DEFAULT_FILTERS.max,
