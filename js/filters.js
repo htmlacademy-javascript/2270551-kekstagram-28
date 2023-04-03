@@ -56,8 +56,8 @@ const photoPreview = document.querySelector('.img-upload__preview img');
 const effectLevel = document.querySelector('.effect-level__value');
 const effectItem = document.querySelector('.effects');
 
-let currentFilter = FILTERS[0];
-
+const DEFAULT_FILTERS = FILTERS[0];
+let currentFilter = DEFAULT_FILTERS;
 
 const isDefault = () => currentFilter === FILTERS[0];
 
@@ -71,11 +71,11 @@ const hideSlider = () => {
 
 window.noUiSlider.create(sliderElement, {
   range: {
-    min: 0,
-    max: 100,
+    min: DEFAULT_FILTERS.min,
+    max: DEFAULT_FILTERS.max,
   },
-  start: 100,
-  step: 1,
+  start: DEFAULT_FILTERS.max,
+  step: DEFAULT_FILTERS.step,
   connect: 'lower'
 });
 hideSlider();
@@ -122,4 +122,3 @@ const onSliderUpdate = () => {
 sliderElement.noUiSlider.on('update', onSliderUpdate);
 
 export {resetEffects};
-
