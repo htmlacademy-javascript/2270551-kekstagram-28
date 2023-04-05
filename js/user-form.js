@@ -157,17 +157,3 @@ const setOnUploadFormChange = () => {
 };
 
 export {setOnFormSubmit, setOnUploadFormChange, closeModal};
-
-/* запрет отправки формы
-imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
-
-const loadPhoto = () => {
-  photoUploadButton.addEventListener('change', () => {
-    openModal();
-  });
-};
-
-export {loadPhoto};*/
