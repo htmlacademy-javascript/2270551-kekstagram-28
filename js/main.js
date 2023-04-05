@@ -1,12 +1,12 @@
-import {onFormSubmit, onUploadFormChange, closeModal} from './user-form.js';
+import {setOnFormSubmit, setOnUploadFormChange, closeModal} from './user-form.js';
 import {createGallery} from './gallery.js';
 import {getData, sendData} from './server-link.js';
 import {showAlert} from './utils.js';
 import {showSuccessMessage, showErrorMessage} from './message.js';
 
-onUploadFormChange();
+setOnUploadFormChange();
 
-onFormSubmit(async (data) => {
+setOnFormSubmit(async (data) => {
   try {
     await sendData(data);
     closeModal();

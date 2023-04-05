@@ -13,6 +13,7 @@ const SubmitButtonText = {
   SENDING: 'Сохраняю...'
 };
 
+
 const imgUploadForm = document.querySelector('.img-upload__form');
 const overlay = document.querySelector('.img-upload__overlay');
 const photoUploadButton = document.querySelector('#upload-file');
@@ -20,9 +21,9 @@ const cancelButton = document.querySelector('.img-upload__cancel');
 const hashtagInput = document.querySelector('.text__hashtags');
 const descriptionInput = document.querySelector('.text__description');
 const inputValue = document.querySelector('.scale__control--value');
-const submitButton = imgUploadForm.querySelector('.img-upload__submit');
-const fileChooser = document.querySelector('.img-upload__input');
-const preview = document.querySelector('.img-upload__preview img');
+const submitButtonElement = imgUploadForm.querySelector('.img-upload__submit');
+const fileChooserElement = document.querySelector('.img-upload__input');
+const previewElement = document.querySelector('.img-upload__preview img');
 const miniPreviews = document.querySelectorAll('.effects__preview');
 
 const pristine = new Pristine(imgUploadForm, {
@@ -56,6 +57,19 @@ cancelButton.addEventListener('click', () => {
 const isInputsFocused = () => document.activeElement === hashtagInput ||
 document.activeElement === descriptionInput;
 
+/* рабочий вариант для закрытия формы при не наведении курсора
+descriptionInput.addEventListener('focus', () => {
+  document.removeEventListener('keydown', onDocumentKeydown);
+});
+descriptionInput.addEventListener('blur', () => {
+  document.addEventListener('keydown', onDocumentKeydown);
+});
+hashtagInput.addEventListener('focus', () => {
+  document.removeEventListener('keydown', onDocumentKeydown);
+});
+hashtagInput.addEventListener('blur', () => {
+  document.addEventListener('keydown', onDocumentKeydown);
+}); */
 
 function onDocumentKeydown(evt) {
   if (isEscKey(evt) && !isInputsFocused()) {
@@ -69,6 +83,10 @@ const getTags = (value) => {
   return tags;
 };
 
+/*function validateHashtagSpaces (value) {
+  const hashArray = value.split(' ');
+  return !hashArray.every((hashtag) => hashtag.includes('#', 1));
+}*/
 
 const validateLength = (value) => getTags(value).every((item) => item.length <= MAX_HASHTAG_LENGTH);
 
@@ -98,18 +116,17 @@ errors.forEach((value, key) =>
     value
   )
 );
-
 const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
+  submitButtonElement.disabled = true;
+  submitButtonElement.textContent = SubmitButtonText.SENDING;
 };
 
 const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
+  submitButtonElement.disabled = false;
+  submitButtonElement.textContent = SubmitButtonText.IDLE;
 };
 
-const onFormSubmit = (cb) => {
+const setOnFormSubmit = (cb) => {
   imgUploadForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
@@ -121,16 +138,16 @@ const onFormSubmit = (cb) => {
   });
 };
 
-const onUploadFormChange = () => {
+const setOnUploadFormChange = () => {
   photoUploadButton.addEventListener('change', () => {
-    const file = fileChooser.files[0];
+    const file = fileChooserElement.files[0];
     const fileName = file.name.toLowerCase();
-    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    const matches = FILE_TYPES.some((item) => fileName.endsWith(item));
 
     if (matches) {
-      preview.src = URL.createObjectURL(file);
+      previewElement.src = URL.createObjectURL(file);
       for (const miniPreview of miniPreviews) {
-        miniPreview.style.backgroundImage = `url(${preview.src})`;
+        miniPreview.style.backgroundImage = `url(${previewElement.src})`;
       }
       openModal();
     } else {
@@ -139,5 +156,18 @@ const onUploadFormChange = () => {
   });
 };
 
+export {setOnFormSubmit, setOnUploadFormChange, closeModal};
 
-export {onFormSubmit, onUploadFormChange, closeModal};
+/* запрет отправки формы
+imgUploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  pristine.validate();
+});
+
+const loadPhoto = () => {
+  photoUploadButton.addEventListener('change', () => {
+    openModal();
+  });
+};
+
+export {loadPhoto};*/
