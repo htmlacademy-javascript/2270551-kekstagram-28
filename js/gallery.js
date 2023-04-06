@@ -3,7 +3,6 @@ import {createPictures, pictureContainer} from './pictures.js';
 import {renderBigPictureData, bigPicture} from './big-picture.js';
 import {isEscKey, isEnterKey} from './utils.js';
 
-
 /* количество коментов на страничке */
 const COMMENTS_COUNT = 5;
 
@@ -14,6 +13,7 @@ const commentList = document.querySelector('.social__comments');
 
 let commentsShown = 0;
 let comments = [];
+//let pictures = [];
 
 
 /* 5 убираем большую картинку по кнопке esc */
