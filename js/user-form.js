@@ -2,9 +2,17 @@
 import {isEscKey} from './utils.js';
 import {resetScale} from './scale-user-form.js';
 import {resetEffects} from './filters.js';
+import {showErrorMessage} from './message.js';
 
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAG_COUNT = 5;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const overlay = document.querySelector('.img-upload__overlay');
@@ -13,6 +21,10 @@ const cancelButton = document.querySelector('.img-upload__cancel');
 const hashtagInput = document.querySelector('.text__hashtags');
 const descriptionInput = document.querySelector('.text__description');
 const inputValue = document.querySelector('.scale__control--value');
+const submitButtonElement = imgUploadForm.querySelector('.img-upload__submit');
+const fileChooserElement = document.querySelector('.img-upload__input');
+const previewElement = document.querySelector('.img-upload__preview img');
+const miniPreviews = document.querySelectorAll('.effects__preview');
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -104,17 +116,44 @@ errors.forEach((value, key) =>
     value
   )
 );
+const blockSubmitButton = () => {
+  submitButtonElement.disabled = true;
+  submitButtonElement.textContent = SubmitButtonText.SENDING;
+};
 
-/* запрет отправки формы */
-imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+const unblockSubmitButton = () => {
+  submitButtonElement.disabled = false;
+  submitButtonElement.textContent = SubmitButtonText.IDLE;
+};
 
-const loadPhoto = () => {
-  photoUploadButton.addEventListener('change', () => {
-    openModal();
+const setOnFormSubmit = (cb) => {
+  imgUploadForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      await cb(new FormData(imgUploadForm));
+      unblockSubmitButton();
+    }
   });
 };
 
-export {loadPhoto};
+const setOnUploadFormChange = () => {
+  photoUploadButton.addEventListener('change', () => {
+    const file = fileChooserElement.files[0];
+    const fileName = file.name.toLowerCase();
+    const matches = FILE_TYPES.some((item) => fileName.endsWith(item));
+
+    if (matches) {
+      previewElement.src = URL.createObjectURL(file);
+      for (const miniPreview of miniPreviews) {
+        miniPreview.style.backgroundImage = `url(${previewElement.src})`;
+      }
+      openModal();
+    } else {
+      showErrorMessage();
+    }
+  });
+};
+
+export {setOnFormSubmit, setOnUploadFormChange, closeModal};
