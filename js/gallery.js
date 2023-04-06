@@ -52,7 +52,7 @@ const renderComments = () => {
   }
 
   /* функция проверки склонения слова после числа */
-  function commentsDeclination(n, textForms) {
+  /*function commentsDeclination(n, textForms) {
     n = Math.abs(n) % 100;
     const n1 = n % 10;
     if (n1 > 1) {
@@ -62,13 +62,24 @@ const renderComments = () => {
       return textForms[0];
     }
     return textForms[1];
-  }
+  }*/
+  const numDecline = (num, nominative, genitiveSingular, genitivePlural) => {
+    if (num > 10 && (Math.round((num % 100) / 10)) === 1) {
+      return genitivePlural;
+    }
+    switch(num % 10){
+      case 1: return nominative;
+      case 2: return genitiveSingular;
+    }
+    return genitivePlural;
+  };
+
   /* заменяем содержимое класса .social__comments на пустую строку */
   commentList.innerHTML = '';
   /* вставляем в содержимое класса .social__comments данные из fragment */
   commentList.append(fragment);
   /* формируем сообщение о количестве комментариев */
-  commentCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> ${commentsDeclination(comments.length, ['коментария', 'коментариев'])}`;
+  commentCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> ${numDecline(comments.length,'коментарий','коментария','коментариев')}`;
 };
 
 /* открытие большого окна по нажатию на миниатюру */
