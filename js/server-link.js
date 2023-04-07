@@ -16,7 +16,7 @@ const load = (route, errorText, method = Method.GET, body = null) =>
   fetch(`${SERV_URL}${route}`, {method, body})
     .then((response) => {
       if (!response.ok) {
-        throw new Error();
+        throw new Promise.reject();
       }
       return response.json();
     })

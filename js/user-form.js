@@ -57,19 +57,6 @@ cancelButton.addEventListener('click', () => {
 const isInputsFocused = () => document.activeElement === hashtagInput ||
 document.activeElement === descriptionInput;
 
-/* рабочий вариант для закрытия формы при не наведении курсора
-descriptionInput.addEventListener('focus', () => {
-  document.removeEventListener('keydown', onDocumentKeydown);
-});
-descriptionInput.addEventListener('blur', () => {
-  document.addEventListener('keydown', onDocumentKeydown);
-});
-hashtagInput.addEventListener('focus', () => {
-  document.removeEventListener('keydown', onDocumentKeydown);
-});
-hashtagInput.addEventListener('blur', () => {
-  document.addEventListener('keydown', onDocumentKeydown);
-}); */
 
 function onDocumentKeydown(evt) {
   if (isEscKey(evt) && !isInputsFocused()) {
