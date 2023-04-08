@@ -1,8 +1,7 @@
-/* форма изменения масштаба большого фото */
-const STEP_VALUE = 25; /* шаг масштабирования */
+const STEP_VALUE = 25;
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
-const DEFAULT_SCALE = 100; /* масштаб по умолчанию */
+const DEFAULT_SCALE = 100;
 
 const minusButton = document.querySelector('.scale__control--smaller');
 const plusButton = document.querySelector('.scale__control--bigger');
@@ -11,7 +10,6 @@ const photoPreview = document.querySelector('.img-upload__preview img');
 
 let currentValue = 0;
 
-/* функция изменения масштаба */
 const scalePhoto = (value) => {
   photoPreview.style.transform = `scale(${value / 100})`;
   inputValue.value = `${value}%`;
@@ -35,7 +33,6 @@ minusButton.addEventListener('click', () => {
   changeZoom(-1);
 });
 
-/* сброс масштаба по умолчанию */
 const resetScale = () => scalePhoto(DEFAULT_SCALE);
 
 export {resetScale};
