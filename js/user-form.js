@@ -1,4 +1,3 @@
-/* модуль работы с формой */
 import {isEscKey} from './utils.js';
 import {resetScale} from './scale-user-form.js';
 import {resetEffects} from './filters.js';
@@ -53,7 +52,6 @@ cancelButton.addEventListener('click', () => {
   closeModal();
 });
 
-/* обработчик запрета закрытия формы если есть фокус на хэтэг или текстовое поле */
 const isInputsFocused = () => document.activeElement === hashtagInput ||
 document.activeElement === descriptionInput;
 
@@ -70,10 +68,6 @@ const getTags = (value) => {
   return tags;
 };
 
-/*function validateHashtagSpaces (value) {
-  const hashArray = value.split(' ');
-  return !hashArray.every((hashtag) => hashtag.includes('#', 1));
-}*/
 
 const validateLength = (value) => getTags(value).every((item) => item.length <= MAX_HASHTAG_LENGTH);
 
