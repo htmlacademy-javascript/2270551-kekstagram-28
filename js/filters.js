@@ -1,4 +1,4 @@
-/* задача 9 часть 2 эффекты фильтров */
+
 const FILTERS = [
   {
     name: 'none',
@@ -49,7 +49,7 @@ const FILTERS = [
     unit: 'px'
   }
 ];
-//задание 12-1 количество фото с сервера
+
 const RANDOM_PHOTO_COUNT = 10;
 
 const Sorter = {
@@ -62,12 +62,12 @@ const imgFilters = document.querySelector('.img-filters');
 let currentSorter = Sorter.DEFAULT;
 let pictures = [];
 
-// сортировка фото рандомная
+
 const sortRandom = () => Math.random() - 0.5;
 
 const sortByComments = (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length;
 
-//функция сортировки по фильтрам
+
 const getSortedPhotos = () => {
   switch (currentSorter) {
     case Sorter.RANDOM:
@@ -171,11 +171,5 @@ const initSort = (loadedPictures, callback) => {
   pictures = [...loadedPictures];
   setOnSorterClick(callback);
 };
-
-/*const initSort = (data, cb) => {
-  pictures = [...data];
-  setOnSorterClick(cb);
-};*/
-
 
 export {initSort,getSortedPhotos,resetEffects};
