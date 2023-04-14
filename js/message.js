@@ -1,56 +1,70 @@
-import {isEscKey} from './utils.js';
+import { isEscKey } from './utils.js';
+import { unblockSubmitButton } from './user-form.js';
 
-const successTemplate = document.querySelector('#success')
-  .content
-  .querySelector('.success');
-const errorTemplate = document.querySelector('#error')
-  .content
-  .querySelector('.error');
-const messageSuccess = successTemplate.cloneNode(true);
-const successButton = messageSuccess.querySelector('.success__button');
-const messageError = errorTemplate.cloneNode(true);
-const errorButton = messageError.querySelector('.error__button');
+const successModalTemplate = document
+  .querySelector('#success')
+  .content.querySelector('.success');
 
-successButton.addEventListener('click', () => {
-  messageSuccess.remove();
-  document.removeEventListener('keydown', onDocumentKeydown);
-});
+const errorModalTemplate = document
+  .querySelector('#error')
+  .content.querySelector('.error');
 
-document.addEventListener('click', (evt) => {
-  if (evt.target.className !== 'success__inner' && evt.target.className !== 'success__title') {
-    messageSuccess.remove();
-  }
-});
+const successModalButton =
+  successModalTemplate.querySelector('.success__button');
+const errorModalButton = errorModalTemplate.querySelector('.error__button');
 
-const showSuccessMessage = () => {
-  document.body.append(messageSuccess);
-  document.addEventListener('keydown', onDocumentKeydown);
-};
+const successWindow = successModalTemplate.querySelector('.success__inner');
+const errorWindow = errorModalTemplate.querySelector('.error__inner');
 
-
-errorButton.addEventListener('click', () => {
-  messageError.remove();
-  document.removeEventListener('keydown', onDocumentKeydown);
-});
-
-document.addEventListener('click', (evt) => {
-  if (evt.target.className !== 'error__inner' && evt.target.className !== 'error__title') {
-    messageError.remove();
-  }
-});
-
-const showErrorMessage = () => {
-  document.body.append(messageError);
-  document.addEventListener('keydown', onDocumentKeydown);
-};
-
-function onDocumentKeydown(evt) {
+const onDocumentKeydown = (evt) => {
   if (isEscKey(evt)) {
     evt.preventDefault();
-    messageSuccess.remove();
-    messageError.remove();
-    document.removeEventListener('keydown', onDocumentKeydown);
+    closeModalError();
+    closeModalSuccess();
   }
+};
+
+function closeModalError() {
+  errorModalTemplate.remove();
+  unblockSubmitButton();
+
+  document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-export {showSuccessMessage, showErrorMessage};
+function closeModalSuccess() {
+  successModalTemplate.remove();
+  unblockSubmitButton();
+
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
+
+const showErrorMessage = () => {
+  document.body.append(errorModalTemplate);
+
+  document.addEventListener('keydown', onDocumentKeydown);
+};
+
+const showSuccessMessage = () => {
+  document.body.append(successModalTemplate);
+
+  document.addEventListener('keydown', onDocumentKeydown);
+};
+
+const onErrorModalClose = () => closeModalError(errorModalTemplate);
+const onSuccessModalClose = () => closeModalSuccess(successModalTemplate);
+
+successModalButton.addEventListener('click', onSuccessModalClose);
+successModalTemplate.addEventListener('click', onSuccessModalClose);
+successWindow.addEventListener('click', (evt) => {
+  evt.stopPropagation();
+});
+
+errorModalButton.addEventListener('click', onErrorModalClose);
+errorModalTemplate.addEventListener('click', onErrorModalClose);
+errorWindow.addEventListener('click', (evt) => {
+  evt.stopPropagation();
+});
+
+
+export {showSuccessMessage, showErrorMessage, successModalTemplate,
+  errorModalTemplate};
