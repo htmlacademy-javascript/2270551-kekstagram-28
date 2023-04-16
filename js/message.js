@@ -1,6 +1,5 @@
 import {isEscKey} from './utils.js';
 
-
 const successTemplate = document.querySelector('#success')
   .content
   .querySelector('.success');
