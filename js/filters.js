@@ -51,6 +51,14 @@ const FILTERS = [
 ];
 
 const RANDOM_PHOTO_COUNT = 10;
+const sliderElement = document.querySelector('.effect-level__slider');
+const sliderContainer = document.querySelector('.img-upload__effect-level');
+const photoPreview = document.querySelector('.img-upload__preview img');
+const effectLevel = document.querySelector('.effect-level__value');
+const effectItem = document.querySelector('.effects');
+
+const DEFAULT_FILTERS = FILTERS[0];
+let currentFilter = DEFAULT_FILTERS;
 
 const Sorter = {
   DEFAULT: 'filter-default',
@@ -94,15 +102,6 @@ const setOnSorterClick = (cb) => {
     cb(getSortedPhotos());
   });
 };
-
-const sliderElement = document.querySelector('.effect-level__slider');
-const sliderContainer = document.querySelector('.img-upload__effect-level');
-const photoPreview = document.querySelector('.img-upload__preview img');
-const effectLevel = document.querySelector('.effect-level__value');
-const effectItem = document.querySelector('.effects');
-
-const DEFAULT_FILTERS = FILTERS[0];
-let currentFilter = DEFAULT_FILTERS;
 
 const isDefault = () => currentFilter === FILTERS[0];
 

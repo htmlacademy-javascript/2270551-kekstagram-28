@@ -29,7 +29,7 @@ const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper__error',
-});
+}, true);
 
 const openModal = () => {
   overlay.classList.remove('hidden');
@@ -57,7 +57,8 @@ document.activeElement === descriptionInput;
 
 
 function onDocumentKeydown(evt) {
-  if (isEscKey(evt) && !isInputsFocused()) {
+  const errorPopup = document.querySelector('.error');
+  if (!errorPopup && isEscKey(evt) && !isInputsFocused()){
     evt.preventDefault();
     closeModal();
   }
@@ -137,4 +138,4 @@ const setOnUploadFormChange = () => {
   });
 };
 
-export {setOnFormSubmit, setOnUploadFormChange, closeModal};
+export {setOnFormSubmit, setOnUploadFormChange, unblockSubmitButton,closeModal};
