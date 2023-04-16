@@ -57,7 +57,6 @@ document.activeElement === descriptionInput;
 
 
 function onDocumentKeydown(evt) {
-  //if (isEscKey(evt) && !isInputsFocused())
   const errorPopup = document.querySelector('.error');
   if (!errorPopup && isEscKey(evt) && !isInputsFocused()){
     evt.preventDefault();
